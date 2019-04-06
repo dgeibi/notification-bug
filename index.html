@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Notifications in Thai language</title>
+    <script>
+      function createNotification() {
+        return new Notification("Hi there!", {
+          body: "คลิกเพื่อดูสตรีมทันที มีรางวัลเยอะแยะมากมายรอคุณอยู่!",
+          tag: Math.random()
+        });
+      }
+
+      function notifyMe() {
+        if (!("Notification" in window)) {
+          alert("This browser does not support desktop notification");
+        } else if (Notification.permission === "granted") {
+          createNotification();
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission().then(function(permission) {
+            if (permission === "granted") {
+              createNotification();
+            }
+          });
+        }
+      }
+      Notification.requestPermission().then(function(result) {
+        console.log(result);
+      });
+    </script>
+  </head>
+  <body>
+    <button onclick="notifyMe()">Notify me!</button>
+  </body>
+</html>
